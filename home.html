@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách các trò chơi</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,17 +13,27 @@
             width: 100%;
             border-collapse: collapse;
         }
+        tr {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         th, td {
             padding: 10px;
             text-align: left;
+            display: flex;
+        }
+        td {
+            max-width: 33%;
         }
         .game {
             display: flex;
             align-items: center;
+            justify-content: center;
         }
         .game img {
-            width: 80px;
-            height: 80px;
+            width: 100%;
+            height: 100%;
             margin-right: 10px;
             border-radius: 10px;
         }
@@ -35,6 +44,8 @@
             margin: 5px 0;
         }
         .game a {
+            display: flex;
+            flex-direction: column;
             text-decoration: none;
             color: #333;
             transition: color 0.3s;
@@ -45,8 +56,6 @@
     </style>
 </head>
 <body>
-    <h1>Danh sách các trò chơi</h1>
-
     <table>
         <tbody id="gameList">
         </tbody>
@@ -61,30 +70,6 @@
                 gameUrl: "https://pleidak.github.io/halloweenknife.html",
                 avatarUrl: "https://pleidak.github.io/assets/avatars/halloween_knife.jpg"
             },
-            {
-                name: "Tên trò chơi 2",
-                description: "Mô tả ngắn về trò chơi 2...",
-                gameUrl: "url_game2",
-                avatarUrl: "game2_avatar.jpg"
-            },
-            {
-                name: "Tên trò chơi 3",
-                description: "Mô tả ngắn về trò chơi 3...",
-                gameUrl: "url_game3",
-                avatarUrl: "game3_avatar.jpg"
-            },
-            {
-                name: "Tên trò chơi 4",
-                description: "Mô tả ngắn về trò chơi 4...",
-                gameUrl: "url_game4",
-                avatarUrl: "game4_avatar.jpg"
-            },
-            {
-                name: "Tên trò chơi 5",
-                description: "Mô tả ngắn về trò chơi 5...",
-                gameUrl: "url_game5",
-                avatarUrl: "game5_avatar.jpg"
-            }
         ];
 
         // Function để hiển thị danh sách các trò chơi ra bảng HTML
@@ -113,8 +98,8 @@
                 let gameImage = document.createElement("img");
                 gameImage.src = game.avatarUrl;
                 gameImage.alt = `Avatar ${game.name}`;
-                gameImage.style.width = "80px"; // Thiết lập kích thước hình ảnh
-                gameImage.style.height = "80px";
+                // gameImage.style.width = "80px"; // Thiết lập kích thước hình ảnh
+                // gameImage.style.height = "80px";
                 gameLink.appendChild(gameImage);
 
                 let gameInfoDiv = document.createElement("div");
