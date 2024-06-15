@@ -56,11 +56,13 @@
     </style>
 </head>
 <body>
+    <p id="interactionStatus">Đang hoạt động</p>
+    <p id="interactionTime">Tổng điểm nhận được: 0</p>
+    
     <table>
         <tbody id="gameList">
         </tbody>
     </table>
-
     <script>
         // Danh sách các trò chơi và thông tin
         const games = [
@@ -71,6 +73,11 @@
                 avatarUrl: "https://pleidak.github.io/assets/avatars/halloween_knife.jpg"
             },
         ];
+
+        // Biến lưu thời gian bắt đầu tương tác
+        let interactionStartTime = null;
+        let isInteracting = null;
+        let elapsedTime = 0;
 
         // Function để hiển thị danh sách các trò chơi ra bảng HTML
         function displayGamesInTable() {
@@ -118,8 +125,54 @@
             }
         }
 
+        // Function để bắt đầu tính thời gian tương tác
+        function startInteractionTimer() {
+            setInterval(updateInteractionTime, 1000); // Cập nhật thời gian mỗi giây
+        }
+
+        // Function để cập nhật thời gian tương tác
+        function updateInteractionTime() {
+            if (isInteracting) {
+                elapsedTime ++; // Đổi sang giây
+                document.getElementById("interactionTime").textContent = `Tổng điểm nhận được: ${elapsedTime.toFixed(1)}`;
+            }
+        }
+
+        // Function để kiểm tra hoạt động tương tác
+        function checkInteractionActivity() {
+            // Sử dụng sự kiện touchstart và touchmove cho điện thoại di động
+            document.addEventListener("touchstart", handleUserActivity);
+            document.addEventListener("touchmove", handleUserActivity);
+            document.addEventListener('mousemove', handleUserActivity);
+            document.addEventListener('mousedown', handleUserActivity); 
+            document.addEventListener('keypress', handleUserActivity);
+
+            // Sử dụng sự kiện keydown cho máy tính
+            document.addEventListener("keydown", handleUserActivity);
+
+            // Thiết lập thời gian chờ để kiểm tra lại
+            setInterval(function() {
+                if (!isInteracting) {
+                    document.getElementById("interactionStatus").textContent = "Đang đợi bạn trở lại";
+                }
+                isInteracting = false; // Reset cờ tương tác
+            }, 5000); // Kiểm tra mỗi 5 giây
+        }
+
+        // Function xử lý hoạt động của người dùng
+        function handleUserActivity() {
+            isInteracting = true;
+            document.getElementById("interactionStatus").textContent = "Đang hoạt động";
+        }
+
         // Gọi hàm để hiển thị danh sách các trò chơi khi trang web được tải
         displayGamesInTable();
+
+        // Gọi hàm để bắt đầu tính thời gian tương tác khi trang web được tải
+        startInteractionTimer();
+
+        // Gọi hàm để kiểm tra hoạt động tương tác khi trang web được tải
+        checkInteractionActivity();
     </script>
 
 </body>
